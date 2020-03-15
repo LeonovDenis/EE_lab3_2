@@ -30,12 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "MyServlet", urlPatterns = {"/toDo"})
 public class MyServlet extends HttpServlet {
     @EJB
-        @Resource(name = "java:global/EE_lab3_1/EE_lab3_1-ejb/EJB!ejbs.EJBDemo")
     EJBDemo eJB;
-    
-    
-    
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,19 +44,28 @@ public class MyServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher requestD = servletContext.getRequestDispatcher("index.jsp");
-        String msg=eJB.getMessage("r");
-        
-        
-        request.setAttribute("msg", msg);
-        
-        requestD.forward(request, response);
-        
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Calc</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Calc at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    //    RequestDispatcher requestD = request.getRequestDispatcher("index.jsp");
+        //    String msg=eJB.getMessage("r");
+
+        //     request.setAttribute("msg", msg);
+    //    requestD.forward(request, response);
+
     }
-    
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
